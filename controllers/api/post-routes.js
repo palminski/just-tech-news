@@ -79,7 +79,7 @@ router.get('/:id', (req,res) => {
 
 //make a post
 router.post('/', (req,res) => {
-   
+   console.log("test");
     Post.create({
         title: req.body.title,
         post_url: req.body.post_url,
