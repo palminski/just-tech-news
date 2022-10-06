@@ -12,16 +12,21 @@ router.get('/', (req, res) => {
 });
 //POST
 router.post('/', (req, res) => {
-    Comment.create({
-        comment_text: req.body.comment_text,
-        user_id: req.body.user_id,
-        post_id: req.body.post_id
-    })
-    .then(dbCommentData => res.json(dbCommentData))
-    .catch(err => {
-        console.log(err);
-        res.status(400).json(err);
-    });
+
+    if (req.session) {
+        console.log(req.body)
+        Comment.create({
+            comment_text: req.body.comment_text,
+            //Use session user ID
+            user_id: req.session.user_id,
+            post_id: req.body.post_id
+        })
+        .then(dbCommentData => res.json(dbCommentData))
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+    }    
 });
 // DELETE
 router.delete('/:id', (req, res) => {
