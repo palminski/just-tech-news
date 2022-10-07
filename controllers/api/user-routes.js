@@ -61,7 +61,7 @@ router.get('/:id', (req,res) => {
 
 
 //POST /api/users
-router.post('/',withAuth, (req,res) => {
+router.post('/', (req,res) => {
     //expects {username, email, and password} what we define in User model
     User.create({
         username: req.body.username,
@@ -84,7 +84,7 @@ router.post('/',withAuth, (req,res) => {
 });
 
 //POST /api/users/login
-router.post('/login',withAuth, (req,res) => {
+router.post('/login', (req,res) => {
     User.findOne({
         where: {
             email: req.body.email
