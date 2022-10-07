@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, Vote, Comment } = require("../../models");
+const withAuth = require('../../utils/auth');
 
 //REST
 //Representational State Transfer
@@ -60,7 +61,7 @@ router.get('/:id', (req,res) => {
 
 
 //POST /api/users
-router.post('/', (req,res) => {
+router.post('/',withAuth, (req,res) => {
     //expects {username, email, and password} what we define in User model
     User.create({
         username: req.body.username,
@@ -83,7 +84,7 @@ router.post('/', (req,res) => {
 });
 
 //POST /api/users/login
-router.post('/login', (req,res) => {
+router.post('/login',withAuth, (req,res) => {
     User.findOne({
         where: {
             email: req.body.email
@@ -126,7 +127,7 @@ router.post('/logout', (req, res) => {
 });
 
 // PUT /api/users/1
-router.put('/:id', (req,res) => {
+router.put('/:id',withAuth, (req,res) => {
     //if req.body has exact key value pairs you can just use rec.body
     User.update(req.body, {
         individualHooks: true,
@@ -148,7 +149,7 @@ router.put('/:id', (req,res) => {
 });
 
 // Delete /api/users/1
-router.delete('/:id', (req,res) => {
+router.delete('/:id',withAuth, (req,res) => {
     User.destroy({
         where: {
             id: req.params.id
